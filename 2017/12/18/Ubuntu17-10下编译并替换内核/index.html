@@ -79,18 +79,26 @@
 
 
 
-<meta name="description" content="起因这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。">
+<meta name="description" content="这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。">
 <meta name="keywords" content="Operating System">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu17.10下编译并替换内核">
 <meta property="og:url" content="http://blog.vincente.me/2017/12/18/Ubuntu17-10下编译并替换内核/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Blog">
-<meta property="og:description" content="起因这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。">
+<meta property="og:description" content="这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-18T05:18:38.943Z">
+<meta property="og:image" content="http://blog.vincente.me/images/2017.12/version.png">
+<meta property="og:image" content="http://blog.vincente.me/images/2017.12/functionList.png">
+<meta property="og:image" content="http://blog.vincente.me/images/2017.12/functionDeclaration.png">
+<meta property="og:image" content="http://blog.vincente.me/images/2017.12/function.png">
+<meta property="og:image" content="http://blog.vincente.me/images/2017.12/testVersion.jpg">
+<meta property="og:image" content="http://blog.vincente.me/images/2017.12/test1.jpg">
+<meta property="og:image" content="http://blog.vincente.me/images/2017.12/test2.jpg">
+<meta property="og:updated_time" content="2017-12-18T14:44:16.339Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu17.10下编译并替换内核">
-<meta name="twitter:description" content="起因这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。">
+<meta name="twitter:description" content="这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。">
+<meta name="twitter:image" content="http://blog.vincente.me/images/2017.12/version.png">
 
 
 
@@ -300,9 +308,11 @@
       
 
       
-        <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。</p>
+        <p>这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。</p>
 <a id="more"></a>
-<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>我们的系统环境是 Ubuntu 17.10,默认内核是 v4.13.0-generic<br>为了避免编译的坑，更新你系统的软件，执行安装以下依赖保平安，后面缺什么再安装什么<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc kernel-package libc6-dev tk8.6 libncurses5-dev fakeroot bin86 libssl-dev build-essential</span><br></pre></td></tr></table></figure></p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>我们的系统环境是 Ubuntu 17.10,默认内核是 v4.13.0-generic</p>
+<p><img src="/images/2017.12/version.png" alt="Alt text"></p>
+<p>为了避免编译的坑，更新你系统的软件，执行安装以下依赖保平安，后面缺什么再安装什么<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc kernel-package libc6-dev tk8.6 libncurses5-dev fakeroot bin86 libssl-dev build-essential</span><br></pre></td></tr></table></figure></p>
 <p>Linux项目的release中分为三种：</p>
 <ul>
 <li>mainline：主线版本，最新的版本</li>
@@ -311,17 +321,23 @@
 </ul>
 <p>我们这次的目的是编译并替换成 Github 上最新的v4.15-rc3，并且添加自己的系统调用<br>首先去<a href="https://github.com/torvalds/linux.git" target="_blank" rel="noopener">Github</a>上 clone 最新内核源码，解压后进入源代码根目录。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/torvalds/linux.git</span><br><span class="line">git branch -a</span><br><span class="line">git checkout (version)</span><br></pre></td></tr></table></figure></p>
 <h3 id="增加系统调用"><a href="#增加系统调用" class="headerlink" title="增加系统调用"></a>增加系统调用</h3><h4 id="1-增加系统调用号"><a href="#1-增加系统调用号" class="headerlink" title="1. 增加系统调用号"></a>1. 增加系统调用号</h4><p>在系统调用入口表中增加一项 (32位系统对应syscall_32.tbl)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /arch/x86/entry/syscalls/syscall_64.tbl</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/2017.12/functionList.png" alt="Alt text"></p>
 <p>记住系统调用号，在后面测试环节将会使用到。</p>
 <h4 id="2-声明系统调用函数"><a href="#2-声明系统调用函数" class="headerlink" title="2. 声明系统调用函数"></a>2. 声明系统调用函数</h4><p>在系统调用函数头文件中加入函数声明<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /include/linux/syscall.h</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/2017.12/functionDeclaration.png" alt="Alt text"></p>
 <h4 id="3-实现系统调用函数"><a href="#3-实现系统调用函数" class="headerlink" title="3. 实现系统调用函数"></a>3. 实现系统调用函数</h4><p>在系统调用文件中加入对应实现函数<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /kernel/sys.c</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/2017.12/function.png" alt="Alt text"></p>
 <p>这里我们写了一个接受参数的hello函数</p>
 <h3 id="编译安装内核"><a href="#编译安装内核" class="headerlink" title="编译安装内核"></a>编译安装内核</h3><p>接下来就是紧张漫长刺激的编译环节</p>
 <h4 id="1-配置内核"><a href="#1-配置内核" class="headerlink" title="1. 配置内核"></a>1. 配置内核</h4><p>因为我们这次是简单的课堂作业，所以没有特殊的配置要求，我就直接复制了老版本内核的配置文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /boot/config-xxx /当前目录/.config</span><br></pre></td></tr></table></figure></p>
 <p>当然你如果有特殊需求也可以去手动修改配置文件<a href="http://blog.csdn.net/qq_29350001/article/details/51489318" target="_blank" rel="noopener">参考</a></p>
 <h4 id="2-编译内核"><a href="#2-编译内核" class="headerlink" title="2. 编译内核"></a>2. 编译内核</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo make -jx (x代表使用线程数量，一般设为核心数加一，例如四核就是-j5)</span><br><span class="line">sudo make modules_install(把安装modules到/lib/modules/目录中)</span><br><span class="line">sudo make install(安装内核)</span><br><span class="line">sudo reboot(重启系统)</span><br></pre></td></tr></table></figure>
 <p>整个过程非常漫长，一共花了将近两个小时（i5+4GB）<br>由于在 make install 中已经帮我们做了引导工作，所以我重启系统之后就已经是最新的内核版本了。当然你也可以去手动修改引导程序选择你需要的内核版本，关键词grub引导。</p>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>输入uname -r发现版本号已经是4.15-rc3了，说明替换成功<br>下面编写调用测试，调用号就是之前声明的那个号码</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>重启后输入uname -r发现版本号已经是4.15-rc3了，说明替换成功</p>
+<p><img src="/images/2017.12/testVersion.jpg" alt="Alt text"></p>
+<p>下面编写调用测试，调用号就是之前声明的那个号码</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">    	syscall(<span class="number">548</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/2017.12/test1.jpg" alt="Alt text"><br><img src="/images/2017.12/test2.jpg" alt="Alt text"></p>
 <p>可以看到打印结果和预期一致。</p>
 
       
@@ -474,7 +490,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#起因"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x8D77;&#x56E0;" class="headerlink" title="&#x8D77;&#x56E0;"></a>&#x8D77;&#x56E0;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x51C6;&#x5907;&#x5DE5;&#x4F5C;" class="headerlink" title="&#x51C6;&#x5907;&#x5DE5;&#x4F5C;"></a>&#x51C6;&#x5907;&#x5DE5;&#x4F5C;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加系统调用"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;" class="headerlink" title="&#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;"></a>&#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-增加系统调用号"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#1-&#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53F7;" class="headerlink" title="1. &#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53F7;"></a>1. &#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53F7;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-声明系统调用函数"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#2-&#x58F0;&#x660E;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;" class="headerlink" title="2. &#x58F0;&#x660E;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;"></a>2. &#x58F0;&#x660E;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-实现系统调用函数"><span class="nav-number">3.3.</span> <span class="nav-text"><a href="#3-&#x5B9E;&#x73B0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;" class="headerlink" title="3. &#x5B9E;&#x73B0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;"></a>3. &#x5B9E;&#x73B0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安装内核"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x7F16;&#x8BD1;&#x5B89;&#x88C5;&#x5185;&#x6838;" class="headerlink" title="&#x7F16;&#x8BD1;&#x5B89;&#x88C5;&#x5185;&#x6838;"></a>&#x7F16;&#x8BD1;&#x5B89;&#x88C5;&#x5185;&#x6838;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-配置内核"><span class="nav-number">4.1.</span> <span class="nav-text"><a href="#1-&#x914D;&#x7F6E;&#x5185;&#x6838;" class="headerlink" title="1. &#x914D;&#x7F6E;&#x5185;&#x6838;"></a>1. &#x914D;&#x7F6E;&#x5185;&#x6838;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-编译内核"><span class="nav-number">4.2.</span> <span class="nav-text"><a href="#2-&#x7F16;&#x8BD1;&#x5185;&#x6838;" class="headerlink" title="2. &#x7F16;&#x8BD1;&#x5185;&#x6838;"></a>2. &#x7F16;&#x8BD1;&#x5185;&#x6838;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;" class="headerlink" title="&#x6D4B;&#x8BD5;"></a>&#x6D4B;&#x8BD5;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x51C6;&#x5907;&#x5DE5;&#x4F5C;" class="headerlink" title="&#x51C6;&#x5907;&#x5DE5;&#x4F5C;"></a>&#x51C6;&#x5907;&#x5DE5;&#x4F5C;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加系统调用"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;" class="headerlink" title="&#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;"></a>&#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-增加系统调用号"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#1-&#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53F7;" class="headerlink" title="1. &#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53F7;"></a>1. &#x589E;&#x52A0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53F7;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-声明系统调用函数"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#2-&#x58F0;&#x660E;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;" class="headerlink" title="2. &#x58F0;&#x660E;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;"></a>2. &#x58F0;&#x660E;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-实现系统调用函数"><span class="nav-number">2.3.</span> <span class="nav-text"><a href="#3-&#x5B9E;&#x73B0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;" class="headerlink" title="3. &#x5B9E;&#x73B0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;"></a>3. &#x5B9E;&#x73B0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x51FD;&#x6570;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安装内核"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x7F16;&#x8BD1;&#x5B89;&#x88C5;&#x5185;&#x6838;" class="headerlink" title="&#x7F16;&#x8BD1;&#x5B89;&#x88C5;&#x5185;&#x6838;"></a>&#x7F16;&#x8BD1;&#x5B89;&#x88C5;&#x5185;&#x6838;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-配置内核"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#1-&#x914D;&#x7F6E;&#x5185;&#x6838;" class="headerlink" title="1. &#x914D;&#x7F6E;&#x5185;&#x6838;"></a>1. &#x914D;&#x7F6E;&#x5185;&#x6838;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-编译内核"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#2-&#x7F16;&#x8BD1;&#x5185;&#x6838;" class="headerlink" title="2. &#x7F16;&#x8BD1;&#x5185;&#x6838;"></a>2. &#x7F16;&#x8BD1;&#x5185;&#x6838;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;" class="headerlink" title="&#x6D4B;&#x8BD5;"></a>&#x6D4B;&#x8BD5;</span></a></li></ol></div>
             
 
           </div>
