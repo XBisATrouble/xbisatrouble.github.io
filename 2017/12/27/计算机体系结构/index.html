@@ -82,17 +82,16 @@
 <meta name="description" content="冯诺依曼体系结构简介1945年，冯·诺依曼首先提出了“存储程序”的概念和二进制原理，后来，人们把利用这种概念和原理设计的电子计算机系统统称为“冯·诺依曼型结构”计算机。冯·诺依曼结构的处理器使用同一个存储器，经由同一个总线传输。">
 <meta name="keywords" content="CSAPP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算机体系结构">
+<meta property="og:title" content="冯诺依曼体系结构和哈弗体系结构">
 <meta property="og:url" content="http://blog.vincente.me/2017/12/27/计算机体系结构/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Blog">
 <meta property="og:description" content="冯诺依曼体系结构简介1945年，冯·诺依曼首先提出了“存储程序”的概念和二进制原理，后来，人们把利用这种概念和原理设计的电子计算机系统统称为“冯·诺依曼型结构”计算机。冯·诺依曼结构的处理器使用同一个存储器，经由同一个总线传输。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.vincente.me/images/2017.12/F_architecture.jpg">
 <meta property="og:image" content="http://blog.vincente.me/images/2017.12/Harvard_architecture.png">
-<meta property="og:image" content="http://blog.vincente.me/images/2017.12/Modern_architecture.jpg">
-<meta property="og:updated_time" content="2017-12-27T04:54:14.032Z">
+<meta property="og:updated_time" content="2017-12-27T07:29:01.474Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="计算机体系结构">
+<meta name="twitter:title" content="冯诺依曼体系结构和哈弗体系结构">
 <meta name="twitter:description" content="冯诺依曼体系结构简介1945年，冯·诺依曼首先提出了“存储程序”的概念和二进制原理，后来，人们把利用这种概念和原理设计的电子计算机系统统称为“冯·诺依曼型结构”计算机。冯·诺依曼结构的处理器使用同一个存储器，经由同一个总线传输。">
 <meta name="twitter:image" content="http://blog.vincente.me/images/2017.12/F_architecture.jpg">
 
@@ -130,7 +129,7 @@
 
 
 
-  <title>计算机体系结构 | Vincent's Blog</title>
+  <title>冯诺依曼体系结构和哈弗体系结构 | Vincent's Blog</title>
   
 
 
@@ -254,7 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">计算机体系结构</h1>
+          <h1 class="post-title" itemprop="name headline">冯诺依曼体系结构和哈弗体系结构</h1>
         
 
         <div class="post-meta">
@@ -327,9 +326,10 @@
 </blockquote>
 <p><img src="/images/2017.12/Harvard_architecture.png" alt="Alt text"></p>
 <h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>哈佛结构的微处理器通常具有较高的执行效率。其程序指令和数据指令分开组织和存储的，执行时可以预先读取下一条指令(是不是会联想到微机原理课堂中讲到的数据缓冲寄存器)。<br>程序和数据空间独立的体系结构， 目的是为了减轻程序运行时的访存瓶颈。由于其独立的体系结构，使得各条指令可以重叠执行，也就客服了数据流传输的瓶颈，提高了运算速度。</p>
-<h3 id="现代计算机结构模型"><a href="#现代计算机结构模型" class="headerlink" title="现代计算机结构模型"></a>现代计算机结构模型</h3><h4 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h4><p>由于运算器和控制器在逻辑关系和电路结构上联系十分紧密，通常将它们合起来统称为中央处理器，简称CPU,把输入输出设备简称为I/O设备，这样现代计算机可以认为由三大部分组成：CPU与主存储器可以称为主机，I/O设备称为外部设备。<br>我们可以看到虽然使用了MAR（主存地址寄存器）和MDR（主存数据寄存器）但是其与储存器连接仍然是一条总线，所以总体上还是在冯诺伊曼体系内。</p>
-<p><img src="/images/2017.12/Modern_architecture.jpg" alt="Alt text"></p>
-<h3 id="冯·诺依曼体系和哈佛体系的区别"><a href="#冯·诺依曼体系和哈佛体系的区别" class="headerlink" title="冯·诺依曼体系和哈佛体系的区别"></a>冯·诺依曼体系和哈佛体系的区别</h3><p>二者的区别就是程序空间和数据空间是否是一体的。冯·诺依曼结构数据空间和地址空间不分开，哈佛结构数据空间和地址空间是分开的。<br>关于两者的优缺点在这里不再赘述，现代高性能 CPU 芯片在设计上包含了两者的优点，将 CPU 的缓存分为指令缓存和数据缓存。指令和数据进入 CPU 之后会依次通过多级缓存，而一级缓存分为L1-I和L1-D，因此CPU内核中指令和数据是走完全不同的总线。</p>
+<h3 id="冯·诺依曼体系和哈佛体系的区别"><a href="#冯·诺依曼体系和哈佛体系的区别" class="headerlink" title="冯·诺依曼体系和哈佛体系的区别"></a>冯·诺依曼体系和哈佛体系的区别</h3><p>二者的区别就是程序空间和数据空间是否是一体的。冯·诺依曼结构数据空间和地址空间不分开，哈佛结构数据空间和地址空间是分开的。</p>
+<blockquote>
+<p>现代高性能CPU芯片在设计上包含了哈佛和冯诺依曼结构的特点。特别是，“拆分缓存”这种改进型的哈佛架构版本是很常见的。 CPU的缓存分为指令缓存和数据缓存。CPU访问缓存时使用哈佛体系结构。然而当高速缓存未命中时，数据从主存储器中检索，却并不分为独立的指令和数据部分，虽然它有独立的内存控制器用于访问RAM，ROM和（NOR）闪存。 因此，在一些情况下可以看到冯诺依曼架构，比如当数据和代码通过相同的内存控制器时，这种硬件通过哈佛架构在缓存访问或至少主内存访问方面提高了执行效率。 此外，在写非缓存区之后，CPU经常拥有写缓存使CPU可以继续执行。当指令被CPU当作数据写入，且软件必须确保在试图执行这些刚写入的指令之前，高速缓存（指令和数据）和写缓存是同步的，这时冯诺依曼结构的内存特点就出现了。</p>
+</blockquote>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.coursera.org/learn/jisuanji-xitong/lecture/qN71D/w1-2-1-feng-nuo-yi-man-jie-gou-zhu-yao-si-xiang" target="_blank" rel="noopener">计算机系统基础（一） ：程序的表示、转换与链接</a></p>
 
       
@@ -498,7 +498,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#冯诺依曼体系结构"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x51AF;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;" class="headerlink" title="&#x51AF;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;"></a>&#x51AF;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x7B80;&#x4ECB;" class="headerlink" title="&#x7B80;&#x4ECB;"></a>&#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要思想"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x4E3B;&#x8981;&#x601D;&#x60F3;" class="headerlink" title="&#x4E3B;&#x8981;&#x601D;&#x60F3;"></a>&#x4E3B;&#x8981;&#x601D;&#x60F3;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈佛体系结构"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;" class="headerlink" title="&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;"></a>&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-1"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#&#x7B80;&#x4ECB;-1" class="headerlink" title="&#x7B80;&#x4ECB;"></a>&#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#&#x7279;&#x70B9;" class="headerlink" title="&#x7279;&#x70B9;"></a>&#x7279;&#x70B9;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现代计算机结构模型"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x73B0;&#x4EE3;&#x8BA1;&#x7B97;&#x673A;&#x7ED3;&#x6784;&#x6A21;&#x578B;" class="headerlink" title="&#x73B0;&#x4EE3;&#x8BA1;&#x7B97;&#x673A;&#x7ED3;&#x6784;&#x6A21;&#x578B;"></a>&#x73B0;&#x4EE3;&#x8BA1;&#x7B97;&#x673A;&#x7ED3;&#x6784;&#x6A21;&#x578B;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-2"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#&#x7B80;&#x4ECB;-2" class="headerlink" title="&#x7B80;&#x4ECB;"></a>&#x7B80;&#x4ECB;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冯·诺依曼体系和哈佛体系的区别"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x51AF;&#xB7;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x548C;&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7684;&#x533A;&#x522B;" class="headerlink" title="&#x51AF;&#xB7;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x548C;&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7684;&#x533A;&#x522B;"></a>&#x51AF;&#xB7;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x548C;&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7684;&#x533A;&#x522B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;" class="headerlink" title="&#x53C2;&#x8003;"></a>&#x53C2;&#x8003;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#冯诺依曼体系结构"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x51AF;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;" class="headerlink" title="&#x51AF;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;"></a>&#x51AF;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x7B80;&#x4ECB;" class="headerlink" title="&#x7B80;&#x4ECB;"></a>&#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要思想"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x4E3B;&#x8981;&#x601D;&#x60F3;" class="headerlink" title="&#x4E3B;&#x8981;&#x601D;&#x60F3;"></a>&#x4E3B;&#x8981;&#x601D;&#x60F3;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈佛体系结构"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;" class="headerlink" title="&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;"></a>&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-1"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#&#x7B80;&#x4ECB;-1" class="headerlink" title="&#x7B80;&#x4ECB;"></a>&#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#&#x7279;&#x70B9;" class="headerlink" title="&#x7279;&#x70B9;"></a>&#x7279;&#x70B9;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冯·诺依曼体系和哈佛体系的区别"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x51AF;&#xB7;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x548C;&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7684;&#x533A;&#x522B;" class="headerlink" title="&#x51AF;&#xB7;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x548C;&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7684;&#x533A;&#x522B;"></a>&#x51AF;&#xB7;&#x8BFA;&#x4F9D;&#x66FC;&#x4F53;&#x7CFB;&#x548C;&#x54C8;&#x4F5B;&#x4F53;&#x7CFB;&#x7684;&#x533A;&#x522B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;" class="headerlink" title="&#x53C2;&#x8003;"></a>&#x53C2;&#x8003;</span></a></li></ol></div>
             
 
           </div>
