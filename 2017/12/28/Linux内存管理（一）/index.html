@@ -82,7 +82,7 @@
 <meta name="description" content="前言最近在学习Linux内核内存管理的部分，研究后发现操作系统课上所学到的知识非常有限，于是决定自己整理，边学边记录下思路，也是为他人提供一定帮助，希望大家能指出错误之处。">
 <meta name="keywords" content="Operating System">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux内存管理（一）">
+<meta property="og:title" content="分段与分页">
 <meta property="og:url" content="http://blog.vincente.me/2017/12/28/Linux内存管理（一）/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Blog">
 <meta property="og:description" content="前言最近在学习Linux内核内存管理的部分，研究后发现操作系统课上所学到的知识非常有限，于是决定自己整理，边学边记录下思路，也是为他人提供一定帮助，希望大家能指出错误之处。">
@@ -91,9 +91,10 @@
 <meta property="og:image" content="http://blog.vincente.me/images/2017.12/paging.jpg">
 <meta property="og:image" content="http://blog.vincente.me/images/2017.12/mmu.png">
 <meta property="og:image" content="http://blog.vincente.me/images/2017.12/tran.png">
-<meta property="og:updated_time" content="2017-12-28T13:36:23.793Z">
+<meta property="og:image" content="http://blog.vincente.me/images/2017.12/segOfLinux.png">
+<meta property="og:updated_time" content="2017-12-28T14:23:48.510Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux内存管理（一）">
+<meta name="twitter:title" content="分段与分页">
 <meta name="twitter:description" content="前言最近在学习Linux内核内存管理的部分，研究后发现操作系统课上所学到的知识非常有限，于是决定自己整理，边学边记录下思路，也是为他人提供一定帮助，希望大家能指出错误之处。">
 <meta name="twitter:image" content="http://blog.vincente.me/images/2017.12/segmentation.jpg">
 
@@ -131,7 +132,7 @@
 
 
 
-  <title>Linux内存管理（一） | Vincent's Blog</title>
+  <title>分段与分页 | Vincent's Blog</title>
   
 
 
@@ -255,7 +256,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux内存管理（一）</h1>
+          <h1 class="post-title" itemprop="name headline">分段与分页</h1>
         
 
         <div class="post-meta">
@@ -335,16 +336,17 @@
 <p>在IA32的保护模式下，逻辑地址被送到内存管理单元（MMU）。MMU是一个物理硬件，其功能是把逻辑地址映射为物理地址，即进行地址转换，如图所示。</p>
 <p><img src="/images/2017.12/mmu.png" alt="Alt text"></p>
 <h4 id="三种地址"><a href="#三种地址" class="headerlink" title="三种地址"></a>三种地址</h4><ul>
-<li>逻辑地址:<br>机器语言指令仍用这种地址指定一个操作数的地址或一条指令的地址。 这种寻址方式在Intel的分段结构中表现得尤为具体，它使得MS-DOS或Windows程序员把程序分为若干段。每个逻辑地址都由一个段和偏移量组成。</li>
-<li>线性地址：<br>线性地址又称<strong>虚拟地址</strong>，是一个32位的无符号整数，可以表达高达232（4GB）的地址。通常用16进制表示线性地址，其取值范围为0x00000000～0xffffffff。</li>
-<li>物理地址：<br>也就是内存单元的实际地址，用于芯片级内存单元寻址。 物理地址也由32位无符号整数表示。</li>
+<li>逻辑地址(Logical address):<br>机器语言指令仍用这种地址指定一个操作数的地址或一条指令的地址。 这种寻址方式在Intel的分段结构中表现得尤为具体，它使得MS-DOS或Windows程序员把程序分为若干段。每个逻辑地址都由一个段和偏移量组成。</li>
+<li>线性地址(Linear address)：<br>线性地址又称<strong>虚拟地址(virtual address)</strong>，是一个32位的无符号整数，可以表达高达232（4GB）的地址。通常用16进制表示线性地址，其取值范围为0x00000000～0xffffffff。</li>
+<li>物理地址(Physical address)：<br>也就是内存单元的实际地址，用于芯片级内存单元寻址。 物理地址也由32位无符号整数表示。</li>
 </ul>
 <h4 id="地址转化"><a href="#地址转化" class="headerlink" title="地址转化"></a>地址转化</h4><p>MMU是一种硬件电路，它包含两个部件，一个是分段部件，一个是分页部件，在此，我们把它们分别叫做分段机制和分页机制，以利于从逻辑的角度来理解硬件的实现机制。分段机制把一个逻辑地址转换为线性地址；接着，分页机制把一个线性地址转换为物理地址</p>
 <p><img src="/images/2017.12/tran.png" alt="Alt text"></p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>IA32的保护模式下的内存寻址机制完成从逻辑地址–线性地址–物理地址的转换。其中，逻辑地址通过分段机制得到线性地址，线性地址通过分页机制得到实际物理地址。</p>
+<p>综上，IA32的保护模式下的内存寻址机制完成从逻辑地址–线性地址–物理地址的转换。其中，逻辑地址通过分段机制得到线性地址，线性地址通过分页机制得到实际物理地址。</p>
 <h3 id="Linux分段的实现"><a href="#Linux分段的实现" class="headerlink" title="Linux分段的实现"></a>Linux分段的实现</h3><p>首先很遗憾的告诉大家，优秀的Linux并没有打算采用分段的思想，但是高贵的Intel中保护模式的实现和段式存储器是密不可分的，既然无法绕过这个坑，那就只能把段基址设成0，段的界限为4GB了23333（其实还有一些其他的细节例如分开用户和内核区域）。</p>
+<p><img src="/images/2017.12/segOfLinux.png" alt="Alt text"></p>
 <p>因此在Linux下，逻辑地址和线性地址（虚拟地址）是一个概念，内核的虚拟地址和物理地址，大部分只差一个线性偏移量。用户空间的虚拟地址和物理地址则采用了多级页表进行映射，但仍称之为线性地址。</p>
-<p>所以总结下来就是分段机制是IA32架构CPU的特色，并不是操作系统寻址方式的必然选择，而我们高贵的linus恰好也看不上分段这种笨重的方法(雾:)，所以Linux主要采取分页机制来寻址。</p>
+<p>所以总结下来就是分段机制是IA32架构CPU的特色，并不是操作系统寻址方式的必然选择，所以Linux主要采取分页机制来寻址。</p>
 <p>接下来两节我们将分别从概念和具体实现上介绍Linux中的分页实现</p>
 
       
@@ -513,7 +515,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实模式"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x5B9E;&#x6A21;&#x5F0F;" class="headerlink" title="&#x5B9E;&#x6A21;&#x5F0F;"></a>&#x5B9E;&#x6A21;&#x5F0F;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是实模式"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#&#x4EC0;&#x4E48;&#x662F;&#x5B9E;&#x6A21;&#x5F0F;" class="headerlink" title="&#x4EC0;&#x4E48;&#x662F;&#x5B9E;&#x6A21;&#x5F0F;"></a>&#x4EC0;&#x4E48;&#x662F;&#x5B9E;&#x6A21;&#x5F0F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实模式的问题"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#&#x5B9E;&#x6A21;&#x5F0F;&#x7684;&#x95EE;&#x9898;" class="headerlink" title="&#x5B9E;&#x6A21;&#x5F0F;&#x7684;&#x95EE;&#x9898;"></a>&#x5B9E;&#x6A21;&#x5F0F;&#x7684;&#x95EE;&#x9898;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分段（Segmentation）"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x5206;&#x6BB5;&#xFF08;Segmentation&#xFF09;" class="headerlink" title="&#x5206;&#x6BB5;&#xFF08;Segmentation&#xFF09;"></a>&#x5206;&#x6BB5;&#xFF08;Segmentation&#xFF09;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#由来"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#&#x7531;&#x6765;" class="headerlink" title="&#x7531;&#x6765;"></a>&#x7531;&#x6765;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#&#x601D;&#x8DEF;" class="headerlink" title="&#x601D;&#x8DEF;"></a>&#x601D;&#x8DEF;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页（Paging）"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x5206;&#x9875;&#xFF08;Paging&#xFF09;" class="headerlink" title="&#x5206;&#x9875;&#xFF08;Paging&#xFF09;"></a>&#x5206;&#x9875;&#xFF08;Paging&#xFF09;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保护模式寻址机制"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x5BFB;&#x5740;&#x673A;&#x5236;" class="headerlink" title="&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x5BFB;&#x5740;&#x673A;&#x5236;"></a>&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x5BFB;&#x5740;&#x673A;&#x5236;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#寻址硬件"><span class="nav-number">5.1.</span> <span class="nav-text"><a href="#&#x5BFB;&#x5740;&#x786C;&#x4EF6;" class="headerlink" title="&#x5BFB;&#x5740;&#x786C;&#x4EF6;"></a>&#x5BFB;&#x5740;&#x786C;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三种地址"><span class="nav-number">5.2.</span> <span class="nav-text"><a href="#&#x4E09;&#x79CD;&#x5730;&#x5740;" class="headerlink" title="&#x4E09;&#x79CD;&#x5730;&#x5740;"></a>&#x4E09;&#x79CD;&#x5730;&#x5740;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#地址转化"><span class="nav-number">5.3.</span> <span class="nav-text"><a href="#&#x5730;&#x5740;&#x8F6C;&#x5316;" class="headerlink" title="&#x5730;&#x5740;&#x8F6C;&#x5316;"></a>&#x5730;&#x5740;&#x8F6C;&#x5316;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.4.</span> <span class="nav-text"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux分段的实现"><span class="nav-number">6.</span> <span class="nav-text"><a href="#Linux&#x5206;&#x6BB5;&#x7684;&#x5B9E;&#x73B0;" class="headerlink" title="Linux&#x5206;&#x6BB5;&#x7684;&#x5B9E;&#x73B0;"></a>Linux&#x5206;&#x6BB5;&#x7684;&#x5B9E;&#x73B0;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实模式"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x5B9E;&#x6A21;&#x5F0F;" class="headerlink" title="&#x5B9E;&#x6A21;&#x5F0F;"></a>&#x5B9E;&#x6A21;&#x5F0F;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是实模式"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#&#x4EC0;&#x4E48;&#x662F;&#x5B9E;&#x6A21;&#x5F0F;" class="headerlink" title="&#x4EC0;&#x4E48;&#x662F;&#x5B9E;&#x6A21;&#x5F0F;"></a>&#x4EC0;&#x4E48;&#x662F;&#x5B9E;&#x6A21;&#x5F0F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实模式的问题"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#&#x5B9E;&#x6A21;&#x5F0F;&#x7684;&#x95EE;&#x9898;" class="headerlink" title="&#x5B9E;&#x6A21;&#x5F0F;&#x7684;&#x95EE;&#x9898;"></a>&#x5B9E;&#x6A21;&#x5F0F;&#x7684;&#x95EE;&#x9898;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分段（Segmentation）"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x5206;&#x6BB5;&#xFF08;Segmentation&#xFF09;" class="headerlink" title="&#x5206;&#x6BB5;&#xFF08;Segmentation&#xFF09;"></a>&#x5206;&#x6BB5;&#xFF08;Segmentation&#xFF09;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#由来"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#&#x7531;&#x6765;" class="headerlink" title="&#x7531;&#x6765;"></a>&#x7531;&#x6765;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#&#x601D;&#x8DEF;" class="headerlink" title="&#x601D;&#x8DEF;"></a>&#x601D;&#x8DEF;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页（Paging）"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x5206;&#x9875;&#xFF08;Paging&#xFF09;" class="headerlink" title="&#x5206;&#x9875;&#xFF08;Paging&#xFF09;"></a>&#x5206;&#x9875;&#xFF08;Paging&#xFF09;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保护模式寻址机制"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x5BFB;&#x5740;&#x673A;&#x5236;" class="headerlink" title="&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x5BFB;&#x5740;&#x673A;&#x5236;"></a>&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x5BFB;&#x5740;&#x673A;&#x5236;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#寻址硬件"><span class="nav-number">5.1.</span> <span class="nav-text"><a href="#&#x5BFB;&#x5740;&#x786C;&#x4EF6;" class="headerlink" title="&#x5BFB;&#x5740;&#x786C;&#x4EF6;"></a>&#x5BFB;&#x5740;&#x786C;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三种地址"><span class="nav-number">5.2.</span> <span class="nav-text"><a href="#&#x4E09;&#x79CD;&#x5730;&#x5740;" class="headerlink" title="&#x4E09;&#x79CD;&#x5730;&#x5740;"></a>&#x4E09;&#x79CD;&#x5730;&#x5740;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#地址转化"><span class="nav-number">5.3.</span> <span class="nav-text"><a href="#&#x5730;&#x5740;&#x8F6C;&#x5316;" class="headerlink" title="&#x5730;&#x5740;&#x8F6C;&#x5316;"></a>&#x5730;&#x5740;&#x8F6C;&#x5316;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux分段的实现"><span class="nav-number">6.</span> <span class="nav-text"><a href="#Linux&#x5206;&#x6BB5;&#x7684;&#x5B9E;&#x73B0;" class="headerlink" title="Linux&#x5206;&#x6BB5;&#x7684;&#x5B9E;&#x73B0;"></a>Linux&#x5206;&#x6BB5;&#x7684;&#x5B9E;&#x73B0;</span></a></li></ol></div>
             
 
           </div>
