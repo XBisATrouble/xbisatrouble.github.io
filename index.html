@@ -299,22 +299,14 @@
 
       
         
-          
-            <h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
-<li>操作系统4.14.25-1-MANJARO</li>
-<li>Clion 173.4674</li>
-<li>QT5.10.1</li>
-</ul>
-<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="1-将QMake转换为CMake"><a href="#1-将QMake转换为CMake" class="headerlink" title="1.将QMake转换为CMake"></a>1.将QMake转换为CMake</h4><p>这里我参考了很多答案，最靠谱的是这个<br><a href="https://www.quora.com/How-do-I-setup-CLion-to-work-with-the-Qt-framework" target="_blank" rel="noopener">How do I setup CLion to work with the Qt framework?</a></p>
-<p>附上配置代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION <span class="number">3.10</span>)</span><br><span class="line">project(untitled)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"></span><br><span class="line">find_package(Qt5 REQUIRED Core Widgets) <span class="comment">//缺啥补啥</span></span><br><span class="line"><span class="comment">//这里需要注意，如果你的Projetc中包含了qrc文件，则必须要将该qrc文件也加进来</span></span><br><span class="line">add_executable(untitled</span><br><span class="line">        main.cpp</span><br><span class="line">        mainwindow.cpp</span><br><span class="line">        mainwindow.h</span><br><span class="line">        ui_mainwindow.h</span><br><span class="line">        moc_mainwindow.h</span><br><span class="line">        moc_ui_mainwindow.h)</span><br><span class="line"></span><br><span class="line">target_link_libraries(untitled Qt5::Widgets)</span><br></pre></td></tr></table></figure></p>
-<h4 id="2-配置工具uic"><a href="#2-配置工具uic" class="headerlink" title="2.配置工具uic"></a>2.配置工具uic</h4><p>uic的作用是将filename.ui文件转换成ui_filename.h，也就是将你在Qt Designer里绘制的界面文件生成相关头文件</p>
-<p><img src="/images/2018.3/uic.png" alt="Alt text"></p>
-<p>相关配置代码如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name: uic</span><br><span class="line">Tool settings:</span><br><span class="line">     Program:           /usr/bin/uic</span><br><span class="line">     Parameters:        $FileName$ -o ui_$FileNameWithoutExtension$.h</span><br><span class="line">     Working directory: $ProjectFileDir$</span><br></pre></td></tr></table></figure></p>
-<h4 id="3-配置工具moc"><a href="#3-配置工具moc" class="headerlink" title="3.配置工具moc"></a>3.配置工具moc</h4><p>moc的作用是将filename.h文件转换成moc_filename.h，因为在QT实现信号槽的过程中，自己封装了一层代码，所以需要相关的转换才能完成编译，这里参考博客<br><a href="http://blog.csdn.net/qinpanke/article/details/8066397" target="_blank" rel="noopener">QT出现“undefined reference to `vtable for’”问题的原因及解决方法</a></p>
-<p>相关配置代码如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name: moc</span><br><span class="line">Tool settings:</span><br><span class="line">     Program:           /usr/bin/moc</span><br><span class="line">     Parameters:        $FileName$ -o moc_$FileNameWithoutExtension$.h</span><br><span class="line">     Working directory: $ProjectFileDir$</span><br></pre></td></tr></table></figure></p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p><img src="./images/2018.3/sketch.png" alt="Alt text"></p>
-
-          
+          <p>由于QtCreator太难用了，所以改用Clion进行Qt开发</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/18/在CLion中编译QT5程序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
