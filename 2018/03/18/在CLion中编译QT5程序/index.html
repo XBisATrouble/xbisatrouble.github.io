@@ -79,13 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Vincent&#39;s Blog">
-<meta property="og:url" content="http://blog.vincente.me/index.html">
+<meta name="description" content="环境 操作系统4.14.25-1-MANJARO Clion 173.4674 QT5.10.1  步骤1.将QMake转换为CMake这里我参考了很多答案，最靠谱的是这个How do I setup CLion to work with the Qt framework? 附上配置代码12345678910111213141516cmake_minimum_required(VERSION 3.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在CLion中编译QT5程序">
+<meta property="og:url" content="http://blog.vincente.me/2018/03/18/在CLion中编译QT5程序/index.html">
 <meta property="og:site_name" content="Vincent&#39;s Blog">
+<meta property="og:description" content="环境 操作系统4.14.25-1-MANJARO Clion 173.4674 QT5.10.1  步骤1.将QMake转换为CMake这里我参考了很多答案，最靠谱的是这个How do I setup CLion to work with the Qt framework? 附上配置代码12345678910111213141516cmake_minimum_required(VERSION 3.">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.vincente.me/images/2018.3/uic.png">
+<meta property="og:image" content="http://blog.vincente.me/2018/03/18/在CLion中编译QT5程序/images/2018.3/sketch.png">
+<meta property="og:updated_time" content="2018-03-18T10:08:34.229Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vincent&#39;s Blog">
+<meta name="twitter:title" content="在CLion中编译QT5程序">
+<meta name="twitter:description" content="环境 操作系统4.14.25-1-MANJARO Clion 173.4674 QT5.10.1  步骤1.将QMake转换为CMake这里我参考了很多答案，最靠谱的是这个How do I setup CLion to work with the Qt framework? 附上配置代码12345678910111213141516cmake_minimum_required(VERSION 3.">
+<meta name="twitter:image" content="http://blog.vincente.me/images/2018.3/uic.png">
 
 
 
@@ -115,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.vincente.me/"/>
+  <link rel="canonical" href="http://blog.vincente.me/2018/03/18/在CLion中编译QT5程序/"/>
 
 
 
 
 
-  <title>Vincent's Blog</title>
+  <title>在CLion中编译QT5程序 | Vincent's Blog</title>
   
 
 
@@ -140,8 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,9 +220,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -246,9 +252,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/18/在CLion中编译QT5程序/" itemprop="url">在CLion中编译QT5程序</a></h1>
+          <h1 class="post-title" itemprop="name headline">在CLion中编译QT5程序</h1>
         
 
         <div class="post-meta">
@@ -298,9 +302,7 @@
       
 
       
-        
-          
-            <h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
+        <h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
 <li>操作系统4.14.25-1-MANJARO</li>
 <li>Clion 173.4674</li>
 <li>QT5.10.1</li>
@@ -314,8 +316,6 @@
 <p>相关配置代码如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name: moc</span><br><span class="line">Tool settings:</span><br><span class="line">     Program:           /usr/bin/moc</span><br><span class="line">     Parameters:        $FileName$ -o moc_$FileNameWithoutExtension$.h</span><br><span class="line">     Working directory: $ProjectFileDir$</span><br></pre></td></tr></table></figure></p>
 <h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p><img src="./images/2018.3/sketch.png" alt="Alt text"></p>
 
-          
-        
       
     </div>
     
@@ -332,136 +332,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.vincente.me/2017/12/28/分段与分页/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vincent Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/28/分段与分页/" itemprop="url">分段与分页</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-28T21:18:02+08:00">
-                2017-12-28
-              </time>
+              <a href="/2017/12/28/分段与分页/" rel="next" title="分段与分页">
+                <i class="fa fa-chevron-left"></i> 分段与分页
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在学习Linux内核内存管理的部分，研究后发现操作系统课上所学到的知识非常有限，于是决定自己整理，边学边记录下思路，也是为他人提供一定帮助，希望大家能指出错误之处。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/28/分段与分页/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -471,258 +363,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.vincente.me/2017/12/27/冯诺依曼体系结构和哈弗体系结构/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vincent Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/27/冯诺依曼体系结构和哈弗体系结构/" itemprop="url">冯诺依曼体系结构和哈弗体系结构</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T12:48:52+08:00">
-                2017-12-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="冯诺依曼体系结构"><a href="#冯诺依曼体系结构" class="headerlink" title="冯诺依曼体系结构"></a>冯诺依曼体系结构</h3><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>1945年，冯·诺依曼首先提出了“存储程序”的概念和二进制原理，后来，人们把利用这种概念和原理设计的电子计算机系统统称为“冯·诺依曼型结构”计算机。冯·诺依曼结构的处理器使用同一个存储器，经由同一个总线传输。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/27/冯诺依曼体系结构和哈弗体系结构/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.vincente.me/2017/12/18/Ubuntu17-10下编译并替换内核/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vincent Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vincent's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/18/Ubuntu17-10下编译并替换内核/" itemprop="url">Ubuntu17.10下编译并替换内核</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T12:34:19+08:00">
-                2017-12-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这学期的操作系统课的平时作业要求编译一个 Linux 内核，百度上的解决方案版本都太老了，于是决定记录下自己的解决过程供参考。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/18/Ubuntu17-10下编译并替换内核/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -730,6 +375,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -750,8 +399,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -808,6 +466,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x73AF;&#x5883;" class="headerlink" title="&#x73AF;&#x5883;"></a>&#x73AF;&#x5883;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x6B65;&#x9AA4;" class="headerlink" title="&#x6B65;&#x9AA4;"></a>&#x6B65;&#x9AA4;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-将QMake转换为CMake"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#1-&#x5C06;QMake&#x8F6C;&#x6362;&#x4E3A;CMake" class="headerlink" title="1.&#x5C06;QMake&#x8F6C;&#x6362;&#x4E3A;CMake"></a>1.&#x5C06;QMake&#x8F6C;&#x6362;&#x4E3A;CMake</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-配置工具uic"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#2-&#x914D;&#x7F6E;&#x5DE5;&#x5177;uic" class="headerlink" title="2.&#x914D;&#x7F6E;&#x5DE5;&#x5177;uic"></a>2.&#x914D;&#x7F6E;&#x5DE5;&#x5177;uic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-配置工具moc"><span class="nav-number">2.3.</span> <span class="nav-text"><a href="#3-&#x914D;&#x7F6E;&#x5DE5;&#x5177;moc" class="headerlink" title="3.&#x914D;&#x7F6E;&#x5DE5;&#x5177;moc"></a>3.&#x914D;&#x7F6E;&#x5DE5;&#x5177;moc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#效果"><span class="nav-number">2.4.</span> <span class="nav-text"><a href="#&#x6548;&#x679C;" class="headerlink" title="&#x6548;&#x679C;"></a>&#x6548;&#x679C;</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -935,6 +609,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
